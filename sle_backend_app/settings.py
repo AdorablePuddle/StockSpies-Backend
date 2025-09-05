@@ -25,7 +25,19 @@ SECRET_KEY = 'django-insecure-tjc+ykul5c9e(uiqsytr7eu=d%7!)#ucmgp*ml3_z$9zqb4clv
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# Debug information, to be removed
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:5173',
+]
+
+ALLOWED_HOSTS = [
+    '*',
+]
+
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:5173',
+]
 
 
 # Application definition
