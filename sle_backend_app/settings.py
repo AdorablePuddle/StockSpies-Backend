@@ -27,6 +27,8 @@ DEBUG = True
 
 # Debug information, to be removed
 
+APPEND_SLASH = True
+
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:5173',
 ]
@@ -55,7 +57,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -137,6 +139,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 import os
 
-MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "mediafiles")
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "media")
 
-MEDIA_URL = "/media/"
+MEDIA_URL = "/media/upload/"
