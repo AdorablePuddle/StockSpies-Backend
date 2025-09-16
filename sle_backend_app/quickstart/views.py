@@ -30,11 +30,10 @@ def upload(request):
         # Log to Django console for verification
         print(f"[upload] Received file: name={f.name}, size={f.size} bytes")
 
-        engine.download_image_file(f)
-
         # Make response dynamic to prove it's the backend
         size = f.size or 1
-        stock_percentage = round((size % 97) + 1.0, 2)  # 1..98 based on size
+        # stock_percentage = round((size % 97) + 1.0, 2)  # 1..98 based on size
+        stock_percentage = engine.get_prediction(f)
         ext = f.name.rsplit(".", 1)[-1].lower() if "." in f.name else "unknown"
 
         return JsonResponse({
