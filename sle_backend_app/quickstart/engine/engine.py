@@ -4,9 +4,16 @@ from qwen_api.client import Qwen
 from qwen_api.core.exceptions import QwenAPIError
 from qwen_api.core.types.chat import ChatMessage, TextBlock, ImageBlock
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 tmpfiles = "./tmpfiles/"
+'''
 print(os.getcwd())
+print(os.environ.get("QWEN_AUTH_TOKEN"))
+print(os.environ.get("QWEN_COOKIE"))
+'''
 client = Qwen(
     log_level = "DEBUG",
     api_key = os.environ.get("QWEN_AUTH_TOKEN"),
@@ -53,13 +60,16 @@ def get_prediction(f : InMemoryUploadedFile):
         )
         
         print(f"[prediction] Output response")
+        output = ""
         for chunk in response:
             delta = chunk.choices[0].delta
-            print(delta.content, end = "", flush = True)
+            output = output + delta.content
+        print(output)
         
+        # Generally speaking, the output isn't working atm.
         return 0
     except QwenAPIError as e:
         print(f"[ERROR] {str(e)}")
         
-        return -1
+        raise RuntimeError("The API fucked up. Check backend log to see the precise reason why.")
         

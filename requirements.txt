@@ -1,2 +1,4 @@
 Django==5.2.6
 djangorestframework==3.16.1
+python-dotenv==1.1.1
+qwen_api==1.4.15
