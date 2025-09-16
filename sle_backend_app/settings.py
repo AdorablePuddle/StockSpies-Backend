@@ -25,7 +25,27 @@ SECRET_KEY = 'django-insecure-tjc+ykul5c9e(uiqsytr7eu=d%7!)#ucmgp*ml3_z$9zqb4clv
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+# Debug information, to be removed
+
+APPEND_SLASH = True
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:5173',
+]
+
+ALLOWED_HOSTS = [
+    "127.0.0.1", 
+    "localhost",
+]
+
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:5173',
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
 
 
 # Application definition
@@ -45,8 +65,9 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -123,6 +144,14 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# I'm killing myself
+
+import os
+
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static/media/")
+
+MEDIA_URL = "api/upload/"
 
 # CORS settings for local frontend
 CORS_ALLOWED_ORIGINS = [
