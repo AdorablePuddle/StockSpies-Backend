@@ -10,7 +10,6 @@ from django.http import JsonResponse, HttpResponseBadRequest, HttpResponseNotAll
 from django.views.decorators.csrf import csrf_exempt
 
 from .engine import engine
-
 @csrf_exempt
 def upload(request):
     """
@@ -24,6 +23,7 @@ def upload(request):
     if request.method == "POST":
         f = request.FILES.get("file")
         
+
         if not f:
             return HttpResponseBadRequest("file missing")
 
