@@ -42,7 +42,7 @@ def get_prediction(f : InMemoryUploadedFile):
             blocks = [
                 TextBlock(
                     block_type = "text",
-                    text = "What is in this image?"
+                    text = "Please identify the closest produce and its stock level in this image and return a string denoting the name of the produce, followed by a colon and then a decimal number between 0 and 1 with 0 being empty and 1 being fully stocked. If no produce are found, return a single '-1'."
                 ),
                 ImageBlock(
                     block_type = "image",
@@ -64,10 +64,14 @@ def get_prediction(f : InMemoryUploadedFile):
         for chunk in response:
             delta = chunk.choices[0].delta
             output = output + delta.content
-        print(output)
         
-        # Generally speaking, the output isn't working atm.
-        return 0
+        print(output)
+        if output == "-1":
+            raise ValueError("Image does not contain any produce.")
+        
+        output_split = output.split(": ")
+        return output_split[0], output_split[1]
+    
     except QwenAPIError as e:
         print(f"[ERROR] {str(e)}")
         
