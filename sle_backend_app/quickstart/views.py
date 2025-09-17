@@ -33,15 +33,18 @@ def upload(request):
         # Make response dynamic to prove it's the backend
         size = f.size or 1
         # stock_percentage = round((size % 97) + 1.0, 2)  # 1..98 based on size
+        produce, stock_level = "", 0
         try:
-            stock_percentage = engine.get_prediction(f)
+            produce, stock_level = engine.get_prediction(f)
         except RuntimeError as E:
+            return HttpResponseBadRequest(E.args)
+        except ValueError as E:
             return HttpResponseBadRequest(E.args)
         ext = f.name.rsplit(".", 1)[-1].lower() if "." in f.name else "unknown"
 
-        return JsonResponse({
-            "stock_percentage": stock_percentage,
-            "type": f"backend-{ext}",
+        return JsonResponse({            
+            "stock_percentage": float(stock_level) * 100,
+            "type": produce,
         })
 
     return HttpResponseNotAllowed(["GET", "POST"])
