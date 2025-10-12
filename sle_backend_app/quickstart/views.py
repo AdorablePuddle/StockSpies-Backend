@@ -1,28 +1,26 @@
-from rest_framework import permissions, viewsets
-from rest_framework.decorators import action
+from rest_framework import permissions, viewsets, generics
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser
 
 from .models import UploadImage
-from .serializer import UploadedImageSerializer
+from .serializer import UploadedImageSerializer, UserSerializer
 
+from django.contrib.auth.models import User
 from django.http import JsonResponse, HttpResponseBadRequest, HttpResponseNotAllowed
 from django.views.decorators.csrf import csrf_exempt
 
 from .engine import engine
-@csrf_exempt
+
+@api_view(["GET", "POST"])
+@permission_classes(IsAuthenticated)
 def upload(request):
-    """
-    GET  -> Quick readiness check in browser.
-    POST -> Accepts multipart/form-data with a file field named 'file'.
-            Returns dynamic values so you can confirm it's the backend.
-    """
     if request.method == "GET":
         return JsonResponse({"ok": True, "detail": "upload endpoint is ready; POST a file"})
 
     if request.method == "POST":
         f = request.FILES.get("file")
-        
 
         if not f:
             return HttpResponseBadRequest("file missing")
@@ -48,6 +46,14 @@ def upload(request):
         })
 
     return HttpResponseNotAllowed(["GET", "POST"])
+
+class UserListCreateView(generics.ListCreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    
+class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
 class UploadedImageViewSet(viewsets.ModelViewSet):
     queryset = UploadImage.objects.all()
