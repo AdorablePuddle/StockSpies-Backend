@@ -1,8 +1,12 @@
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.files.storage import FileSystemStorage
+
 from qwen_api.client import Qwen
 from qwen_api.core.exceptions import QwenAPIError
 from qwen_api.core.types.chat import ChatMessage, TextBlock, ImageBlock
+
+from gpt_api import ask
+
 import os
 from dotenv import load_dotenv
 
@@ -14,17 +18,20 @@ print(os.getcwd())
 print(os.environ.get("QWEN_AUTH_TOKEN"))
 print(os.environ.get("QWEN_COOKIE"))
 '''
+'''
 client = Qwen(
     log_level = "DEBUG",
     api_key = os.environ.get("QWEN_AUTH_TOKEN"),
     cookie = os.environ.get("QWEN_COOKIE"),
 )
+'''
+# To-do: Rewrite all this!
 
 def download_image_file(f : InMemoryUploadedFile):
     print(f"[upload] Download image")
     FileSystemStorage(location = tmpfiles).save(f.name, f)
     return f.name
-
+'''
 def get_prediction(f : InMemoryUploadedFile):
     file_name = download_image_file(f)
     
@@ -76,4 +83,4 @@ def get_prediction(f : InMemoryUploadedFile):
         print(f"[ERROR] {str(e)}")
         
         raise RuntimeError("The API fucked up. Check backend log to see the precise reason why.")
-        
+'''

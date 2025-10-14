@@ -13,7 +13,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from .engine import engine
 
-@api_view(["GET", "POST"])
+@csrf_exempt
 @permission_classes(IsAuthenticated)
 def upload(request):
     if request.method == "GET":
