@@ -14,7 +14,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .engine import engine
 
 @csrf_exempt
-@permission_classes(IsAuthenticated)
+# @permission_classes(IsAuthenticated)
 def upload(request):
     if request.method == "GET":
         return JsonResponse({"ok": True, "detail": "upload endpoint is ready; POST a file"})
@@ -31,19 +31,16 @@ def upload(request):
         # Make response dynamic to prove it's the backend
         size = f.size or 1
         # stock_percentage = round((size % 97) + 1.0, 2)  # 1..98 based on size
-        produce, stock_level = "", 0
+        prediction = {}
         try:
-            produce, stock_level = engine.get_prediction(f)
+            prediction = engine.get_prediction(f)
         except RuntimeError as E:
             return HttpResponseBadRequest(E.args)
         except ValueError as E:
             return HttpResponseBadRequest(E.args)
         ext = f.name.rsplit(".", 1)[-1].lower() if "." in f.name else "unknown"
 
-        return JsonResponse({            
-            "stock_percentage": float(stock_level) * 100,
-            "type": produce,
-        })
+        return JsonResponse(prediction, safe = False)
 
     return HttpResponseNotAllowed(["GET", "POST"])
 
