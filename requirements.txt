@@ -1,4 +1,5 @@
-Django==5.2.6
+Django==5.2.7
 djangorestframework==3.16.1
+djangorestframework_simplejwt==5.5.1
 python-dotenv==1.1.1
 qwen_api==1.4.15

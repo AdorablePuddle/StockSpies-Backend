@@ -14,5 +14,9 @@ Run server:
 ```sh
 python manage.py runserver
 ```
-## II. Other complications
-When using the backend, remember to follow the steps [here](https://pypi.org/project/qwen-api) to get the API key and cookie, replaced the one in .env with it.
+## II. Machine Learning Engine:
+Before running the server, make sure to create a .env file containing:
+```
+OPENAI_API_KEY=<Insert Transfem Keysmashing Here>
+```
+With the appropriate OpenAI API key. The key must allow the usage of the gpt-4.1-mini model.
