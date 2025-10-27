@@ -17,7 +17,7 @@ python manage.py runserver
 ## II. Machine Learning Engine:
 Before running the server, make sure to create a .env file containing:
 ```
-OPENAI_API_KEY=<Insert Transfem Keysmashing Here>
+OPENAI_API_KEY=<API key>
 ```
 With the appropriate OpenAI API key. The key must allow the usage of the gpt-4.1-mini model.
 
