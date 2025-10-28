@@ -2,7 +2,7 @@
 ## I. Installation
 Installing requirements
 ```sh
-pip install requirements.txt
+pip install -r requirements.txt
 ```
 
 Migrate database
