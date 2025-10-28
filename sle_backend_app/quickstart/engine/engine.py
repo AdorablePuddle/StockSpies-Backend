@@ -121,7 +121,8 @@ def get_prediction(f : InMemoryUploadedFile):
     
     print(f"[prediction] Output response")
     if output == "-1":
-        raise ValueError("Image does not contain any produce.")
+        return []
+        # raise ValueError("Image does not contain any produce.")
     
     result = dict(loads(output))
     now = datetime.now()
